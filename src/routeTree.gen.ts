@@ -17,9 +17,18 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
 import { Route as AppCitasRouteImport } from './routes/app.citas'
 import { Route as AppClientesRouteImport } from './routes/app.clientes'
+import { Route as AppConfiguracionRouteImport } from './routes/app.configuracion'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppEmpleadosRouteImport } from './routes/app.empleados'
+import { Route as AppEstadisticasRouteImport } from './routes/app.estadisticas'
+import { Route as AppMascotasRouteImport } from './routes/app.mascotas'
+import { Route as AppMisCitasRouteImport } from './routes/app.mis-citas'
+import { Route as AppMisMascotasRouteImport } from './routes/app.mis-mascotas'
+import { Route as AppServiciosRouteImport } from './routes/app.servicios'
 import { Route as AppClientesIndexRouteImport } from './routes/app.clientes.index'
 import { Route as AppClientesCustomerIdRouteImport } from './routes/app.clientes.$customerId'
+import { Route as AppMascotasIndexRouteImport } from './routes/app.mascotas.index'
+import { Route as AppMascotasPetIdRouteImport } from './routes/app.mascotas.$petId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -61,9 +70,44 @@ const AppClientesRoute = AppClientesRouteImport.update({
   path: '/clientes',
   getParentRoute: () => AppRoute,
 } as any)
+const AppConfiguracionRoute = AppConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEmpleadosRoute = AppEmpleadosRouteImport.update({
+  id: '/empleados',
+  path: '/empleados',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEstadisticasRoute = AppEstadisticasRouteImport.update({
+  id: '/estadisticas',
+  path: '/estadisticas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMascotasRoute = AppMascotasRouteImport.update({
+  id: '/mascotas',
+  path: '/mascotas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMisCitasRoute = AppMisCitasRouteImport.update({
+  id: '/mis-citas',
+  path: '/mis-citas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMisMascotasRoute = AppMisMascotasRouteImport.update({
+  id: '/mis-mascotas',
+  path: '/mis-mascotas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppServiciosRoute = AppServiciosRouteImport.update({
+  id: '/servicios',
+  path: '/servicios',
   getParentRoute: () => AppRoute,
 } as any)
 const AppClientesIndexRoute = AppClientesIndexRouteImport.update({
@@ -76,6 +120,16 @@ const AppClientesCustomerIdRoute = AppClientesCustomerIdRouteImport.update({
   path: '/$customerId',
   getParentRoute: () => AppClientesRoute,
 } as any)
+const AppMascotasIndexRoute = AppMascotasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppMascotasRoute,
+} as any)
+const AppMascotasPetIdRoute = AppMascotasPetIdRouteImport.update({
+  id: '/$petId',
+  path: '/$petId',
+  getParentRoute: () => AppMascotasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -85,10 +139,19 @@ export interface FileRoutesByFullPath {
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
   '/app/clientes': typeof AppClientesRouteWithChildren
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/empleados': typeof AppEmpleadosRoute
+  '/app/estadisticas': typeof AppEstadisticasRoute
+  '/app/mascotas': typeof AppMascotasRouteWithChildren
+  '/app/mis-citas': typeof AppMisCitasRoute
+  '/app/mis-mascotas': typeof AppMisMascotasRoute
+  '/app/servicios': typeof AppServiciosRoute
   '/app/': typeof AppIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
+  '/app/mascotas/': typeof AppMascotasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,10 +159,18 @@ export interface FileRoutesByTo {
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/empleados': typeof AppEmpleadosRoute
+  '/app/estadisticas': typeof AppEstadisticasRoute
+  '/app/mis-citas': typeof AppMisCitasRoute
+  '/app/mis-mascotas': typeof AppMisMascotasRoute
+  '/app/servicios': typeof AppServiciosRoute
   '/app': typeof AppIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes': typeof AppClientesIndexRoute
+  '/app/mascotas': typeof AppMascotasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -110,10 +181,19 @@ export interface FileRoutesById {
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
   '/app/clientes': typeof AppClientesRouteWithChildren
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/empleados': typeof AppEmpleadosRoute
+  '/app/estadisticas': typeof AppEstadisticasRoute
+  '/app/mascotas': typeof AppMascotasRouteWithChildren
+  '/app/mis-citas': typeof AppMisCitasRoute
+  '/app/mis-mascotas': typeof AppMisMascotasRoute
+  '/app/servicios': typeof AppServiciosRoute
   '/app/': typeof AppIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
+  '/app/mascotas/': typeof AppMascotasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,10 +205,19 @@ export interface FileRouteTypes {
     | '/app/agenda'
     | '/app/citas'
     | '/app/clientes'
+    | '/app/configuracion'
     | '/app/dashboard'
+    | '/app/empleados'
+    | '/app/estadisticas'
+    | '/app/mascotas'
+    | '/app/mis-citas'
+    | '/app/mis-mascotas'
+    | '/app/servicios'
     | '/app/'
     | '/app/clientes/$customerId'
+    | '/app/mascotas/$petId'
     | '/app/clientes/'
+    | '/app/mascotas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,10 +225,18 @@ export interface FileRouteTypes {
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
+    | '/app/configuracion'
     | '/app/dashboard'
+    | '/app/empleados'
+    | '/app/estadisticas'
+    | '/app/mis-citas'
+    | '/app/mis-mascotas'
+    | '/app/servicios'
     | '/app'
     | '/app/clientes/$customerId'
+    | '/app/mascotas/$petId'
     | '/app/clientes'
+    | '/app/mascotas'
   id:
     | '__root__'
     | '/'
@@ -149,10 +246,19 @@ export interface FileRouteTypes {
     | '/app/agenda'
     | '/app/citas'
     | '/app/clientes'
+    | '/app/configuracion'
     | '/app/dashboard'
+    | '/app/empleados'
+    | '/app/estadisticas'
+    | '/app/mascotas'
+    | '/app/mis-citas'
+    | '/app/mis-mascotas'
+    | '/app/servicios'
     | '/app/'
     | '/app/clientes/$customerId'
+    | '/app/mascotas/$petId'
     | '/app/clientes/'
+    | '/app/mascotas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -220,11 +326,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppClientesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/configuracion': {
+      id: '/app/configuracion'
+      path: '/configuracion'
+      fullPath: '/app/configuracion'
+      preLoaderRoute: typeof AppConfiguracionRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/dashboard': {
       id: '/app/dashboard'
       path: '/dashboard'
       fullPath: '/app/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/empleados': {
+      id: '/app/empleados'
+      path: '/empleados'
+      fullPath: '/app/empleados'
+      preLoaderRoute: typeof AppEmpleadosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/estadisticas': {
+      id: '/app/estadisticas'
+      path: '/estadisticas'
+      fullPath: '/app/estadisticas'
+      preLoaderRoute: typeof AppEstadisticasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mascotas': {
+      id: '/app/mascotas'
+      path: '/mascotas'
+      fullPath: '/app/mascotas'
+      preLoaderRoute: typeof AppMascotasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mis-citas': {
+      id: '/app/mis-citas'
+      path: '/mis-citas'
+      fullPath: '/app/mis-citas'
+      preLoaderRoute: typeof AppMisCitasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mis-mascotas': {
+      id: '/app/mis-mascotas'
+      path: '/mis-mascotas'
+      fullPath: '/app/mis-mascotas'
+      preLoaderRoute: typeof AppMisMascotasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/servicios': {
+      id: '/app/servicios'
+      path: '/servicios'
+      fullPath: '/app/servicios'
+      preLoaderRoute: typeof AppServiciosRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/clientes/': {
@@ -240,6 +395,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/clientes/$customerId'
       preLoaderRoute: typeof AppClientesCustomerIdRouteImport
       parentRoute: typeof AppClientesRoute
+    }
+    '/app/mascotas/': {
+      id: '/app/mascotas/'
+      path: '/'
+      fullPath: '/app/mascotas/'
+      preLoaderRoute: typeof AppMascotasIndexRouteImport
+      parentRoute: typeof AppMascotasRoute
+    }
+    '/app/mascotas/$petId': {
+      id: '/app/mascotas/$petId'
+      path: '/$petId'
+      fullPath: '/app/mascotas/$petId'
+      preLoaderRoute: typeof AppMascotasPetIdRouteImport
+      parentRoute: typeof AppMascotasRoute
     }
   }
 }
@@ -258,11 +427,32 @@ const AppClientesRouteWithChildren = AppClientesRoute._addFileChildren(
   AppClientesRouteChildren,
 )
 
+interface AppMascotasRouteChildren {
+  AppMascotasPetIdRoute: typeof AppMascotasPetIdRoute
+  AppMascotasIndexRoute: typeof AppMascotasIndexRoute
+}
+
+const AppMascotasRouteChildren: AppMascotasRouteChildren = {
+  AppMascotasPetIdRoute: AppMascotasPetIdRoute,
+  AppMascotasIndexRoute: AppMascotasIndexRoute,
+}
+
+const AppMascotasRouteWithChildren = AppMascotasRoute._addFileChildren(
+  AppMascotasRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAgendaRoute: typeof AppAgendaRoute
   AppCitasRoute: typeof AppCitasRoute
   AppClientesRoute: typeof AppClientesRouteWithChildren
+  AppConfiguracionRoute: typeof AppConfiguracionRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppEmpleadosRoute: typeof AppEmpleadosRoute
+  AppEstadisticasRoute: typeof AppEstadisticasRoute
+  AppMascotasRoute: typeof AppMascotasRouteWithChildren
+  AppMisCitasRoute: typeof AppMisCitasRoute
+  AppMisMascotasRoute: typeof AppMisMascotasRoute
+  AppServiciosRoute: typeof AppServiciosRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -270,7 +460,14 @@ const AppRouteChildren: AppRouteChildren = {
   AppAgendaRoute: AppAgendaRoute,
   AppCitasRoute: AppCitasRoute,
   AppClientesRoute: AppClientesRouteWithChildren,
+  AppConfiguracionRoute: AppConfiguracionRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppEmpleadosRoute: AppEmpleadosRoute,
+  AppEstadisticasRoute: AppEstadisticasRoute,
+  AppMascotasRoute: AppMascotasRouteWithChildren,
+  AppMisCitasRoute: AppMisCitasRoute,
+  AppMisMascotasRoute: AppMisMascotasRoute,
+  AppServiciosRoute: AppServiciosRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
