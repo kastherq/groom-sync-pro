@@ -70,7 +70,7 @@ export function GroomProvider({
   userName: string;
   children: ReactNode;
 }) {
-  const [branch, setBranch] = useState(BRANCHES[0]);
+  const [branch, setBranch] = useState(BRANCHES[0] ?? "Costa del Este");
   const [appointments, setAppointments] = useState<Appointment[]>(seedAppointments);
   const [customers, setCustomers] = useState<Customer[]>(seedCustomers);
   const [employees, setEmployees] = useState<Employee[]>(seedEmployees);
