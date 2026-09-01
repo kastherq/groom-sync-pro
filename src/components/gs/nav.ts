@@ -13,7 +13,7 @@ import type { LucideIcon } from "lucide-react";
 import type { LinkProps } from "@tanstack/react-router";
 import type { Role } from "@/lib/groomsync-data";
 
-export type NavItem = { label: string; to: LinkProps["to"]; icon: LucideIcon };
+export type NavItem = { label: string; to: NonNullable<LinkProps["to"]>; icon: LucideIcon };
 
 export const NAV_BY_ROLE: Record<Role, NavItem[]> = {
   dueno: [
