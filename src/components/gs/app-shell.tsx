@@ -17,7 +17,7 @@ import { signOut, useGroom } from "@/lib/groomsync-store";
 import { NAV_BY_ROLE } from "./nav";
 import { cn } from "@/lib/utils";
 
-function NavList({ onNavigate }: { onNavigate?: () => void }) {
+function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role } = useGroom();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const items = NAV_BY_ROLE[role];
@@ -47,7 +47,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role, branch } = useGroom();
   return (
     <div className="flex h-full flex-col bg-sidebar">
