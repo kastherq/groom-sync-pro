@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader, SectionCard, EmptyState } from "@/components/gs/primitives";
 import { ApptStateBadge, PetStateBadge } from "@/components/gs/badges";
 import { useGroom } from "@/lib/groomsync-store";
-import { findService, PawIconFallback } from "@/lib/groomsync-helpers";
+import { findService } from "@/lib/groomsync-data";
 import { PawPrint } from "lucide-react";
 
 export const Route = createFileRoute("/app/clientes/$customerId")({

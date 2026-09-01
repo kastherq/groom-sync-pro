@@ -14,7 +14,12 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RecuperarPasswordRouteImport } from './routes/recuperar-password'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAgendaRouteImport } from './routes/app.agenda'
+import { Route as AppCitasRouteImport } from './routes/app.citas'
+import { Route as AppClientesRouteImport } from './routes/app.clientes'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppClientesIndexRouteImport } from './routes/app.clientes.index'
+import { Route as AppClientesCustomerIdRouteImport } from './routes/app.clientes.$customerId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,10 +46,35 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAgendaRoute = AppAgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCitasRoute = AppCitasRouteImport.update({
+  id: '/citas',
+  path: '/citas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClientesRoute = AppClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AppRoute,
+} as any)
+const AppClientesIndexRoute = AppClientesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppClientesRoute,
+} as any)
+const AppClientesCustomerIdRoute = AppClientesCustomerIdRouteImport.update({
+  id: '/$customerId',
+  path: '/$customerId',
+  getParentRoute: () => AppClientesRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -52,15 +82,24 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/citas': typeof AppCitasRoute
+  '/app/clientes': typeof AppClientesRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
+  '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/clientes/': typeof AppClientesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/citas': typeof AppCitasRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app': typeof AppIndexRoute
+  '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/clientes': typeof AppClientesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,23 +107,52 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
+  '/app/agenda': typeof AppAgendaRoute
+  '/app/citas': typeof AppCitasRoute
+  '/app/clientes': typeof AppClientesRouteWithChildren
   '/app/dashboard': typeof AppDashboardRoute
   '/app/': typeof AppIndexRoute
+  '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
+  '/app/clientes/': typeof AppClientesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/app' | '/login' | '/recuperar-password' | '/app/dashboard' | '/app/'
+    | '/'
+    | '/app'
+    | '/login'
+    | '/recuperar-password'
+    | '/app/agenda'
+    | '/app/citas'
+    | '/app/clientes'
+    | '/app/dashboard'
+    | '/app/'
+    | '/app/clientes/$customerId'
+    | '/app/clientes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/recuperar-password' | '/app/dashboard' | '/app'
+  to:
+    | '/'
+    | '/login'
+    | '/recuperar-password'
+    | '/app/agenda'
+    | '/app/citas'
+    | '/app/dashboard'
+    | '/app'
+    | '/app/clientes/$customerId'
+    | '/app/clientes'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/login'
     | '/recuperar-password'
+    | '/app/agenda'
+    | '/app/citas'
+    | '/app/clientes'
     | '/app/dashboard'
     | '/app/'
+    | '/app/clientes/$customerId'
+    | '/app/clientes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,6 +199,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/agenda': {
+      id: '/app/agenda'
+      path: '/agenda'
+      fullPath: '/app/agenda'
+      preLoaderRoute: typeof AppAgendaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/citas': {
+      id: '/app/citas'
+      path: '/citas'
+      fullPath: '/app/citas'
+      preLoaderRoute: typeof AppCitasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/clientes': {
+      id: '/app/clientes'
+      path: '/clientes'
+      fullPath: '/app/clientes'
+      preLoaderRoute: typeof AppClientesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/dashboard': {
       id: '/app/dashboard'
       path: '/dashboard'
@@ -138,15 +227,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/clientes/': {
+      id: '/app/clientes/'
+      path: '/'
+      fullPath: '/app/clientes/'
+      preLoaderRoute: typeof AppClientesIndexRouteImport
+      parentRoute: typeof AppClientesRoute
+    }
+    '/app/clientes/$customerId': {
+      id: '/app/clientes/$customerId'
+      path: '/$customerId'
+      fullPath: '/app/clientes/$customerId'
+      preLoaderRoute: typeof AppClientesCustomerIdRouteImport
+      parentRoute: typeof AppClientesRoute
+    }
   }
 }
 
+interface AppClientesRouteChildren {
+  AppClientesCustomerIdRoute: typeof AppClientesCustomerIdRoute
+  AppClientesIndexRoute: typeof AppClientesIndexRoute
+}
+
+const AppClientesRouteChildren: AppClientesRouteChildren = {
+  AppClientesCustomerIdRoute: AppClientesCustomerIdRoute,
+  AppClientesIndexRoute: AppClientesIndexRoute,
+}
+
+const AppClientesRouteWithChildren = AppClientesRoute._addFileChildren(
+  AppClientesRouteChildren,
+)
+
 interface AppRouteChildren {
+  AppAgendaRoute: typeof AppAgendaRoute
+  AppCitasRoute: typeof AppCitasRoute
+  AppClientesRoute: typeof AppClientesRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAgendaRoute: AppAgendaRoute,
+  AppCitasRoute: AppCitasRoute,
+  AppClientesRoute: AppClientesRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppIndexRoute: AppIndexRoute,
 }
