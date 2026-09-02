@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
-import { Clock, MessageCircle, PawPrint, User } from "lucide-react";
+import { Clock, MessageCircle, PawPrint, Undo2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -14,12 +14,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { PET_STATE_META, findCustomer, findPet, findService, type Appointment } from "@/lib/groomsync-data";
+import {
+  PET_STATE_META,
+  findCustomer,
+  findPet,
+  findService,
+  prevPetState,
+  type Appointment,
+} from "@/lib/groomsync-data";
 import { useGroom } from "@/lib/groomsync-store";
 import { PetStateBadge } from "./badges";
 
 export function PetActionCard({ appt, compact = false }: { appt: Appointment; compact?: boolean }) {
-  const { setPetState } = useGroom();
+  const { setPetState, employees, currentEmployeeId, claimAppointment, releaseAppointment, role } = useGroom();
   const [confirmReady, setConfirmReady] = useState(false);
   const [note, setNote] = useState("");
   const [noteOpen, setNoteOpen] = useState(false);
@@ -28,6 +35,10 @@ export function PetActionCard({ appt, compact = false }: { appt: Appointment; co
   const owner = findCustomer(appt.customerId);
   const service = findService(appt.serviceId);
   const meta = PET_STATE_META[appt.petState];
+  const back = prevPetState(appt.petState);
+  const assignee = employees.find((e) => e.id === appt.employeeId);
+  const isMine = appt.employeeId === currentEmployeeId;
+  const isGroomer = role === "peluquero";
 
   if (!pet) return null;
 
@@ -91,6 +102,46 @@ export function PetActionCard({ appt, compact = false }: { appt: Appointment; co
         </p>
       )}
 
+      {isGroomer && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border px-3 py-2">
+          <p className="type-caption">
+            {assignee ? (
+              <>
+                Asignada a <span className="font-semibold text-foreground">{isMine ? "ti" : assignee.name}</span>
+              </>
+            ) : (
+              "Sin asignar"
+            )}
+          </p>
+          {!assignee ? (
+            <Button
+              size="sm"
+              className="h-9"
+              onClick={() => {
+                claimAppointment(appt.id, currentEmployeeId);
+                toast.success(`Te asignaste a ${pet.name}`);
+              }}
+            >
+              Asignármela
+            </Button>
+          ) : isMine ? (
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-9"
+              onClick={() => {
+                releaseAppointment(appt.id);
+                toast.info(`Liberaste a ${pet.name}. Otro compañero puede asignársela.`);
+              }}
+            >
+              Liberar
+            </Button>
+          ) : (
+            <span className="type-caption">Ya tomada por otro compañero</span>
+          )}
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2">
         {meta.next ? (
           <Button className="h-11 flex-1 min-w-[180px]" onClick={advance}>
@@ -99,6 +150,30 @@ export function PetActionCard({ appt, compact = false }: { appt: Appointment; co
         ) : (
           <Button className="h-11 flex-1 min-w-[180px]" variant="outline" disabled>
             Servicio finalizado
+          </Button>
+        )}
+        {back && (
+          <Button
+            variant="outline"
+            className="h-11"
+            onClick={() => {
+              setPetState(appt.id, back);
+              toast.info(`${pet.name} volvió a ${PET_STATE_META[back].label}`);
+            }}
+          >
+            <Undo2 className="mr-1.5 h-4 w-4" /> Volver a {PET_STATE_META[back].label}
+          </Button>
+        )}
+        {appt.petState === "incidencia" && (
+          <Button
+            variant="outline"
+            className="h-11"
+            onClick={() => {
+              setPetState(appt.id, "esperando");
+              toast.success(`Incidencia resuelta. ${pet.name} volvió a Esperando.`);
+            }}
+          >
+            <Undo2 className="mr-1.5 h-4 w-4" /> Resolver incidencia
           </Button>
         )}
         <Button variant="outline" className="h-11" onClick={() => setNoteOpen(true)}>
