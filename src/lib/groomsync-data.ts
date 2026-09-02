@@ -175,10 +175,10 @@ export const appointments: Appointment[] = [
   { id: "a1", petId: "p1", customerId: "c1", serviceId: "s3", employeeId: "e1", date: "2026-09-01", time: "09:00", price: 45, status: "confirmada", petState: "bano", notes: "Cliente llega 10 min antes.", notified: false },
   { id: "a2", petId: "p4", customerId: "c3", serviceId: "s2", employeeId: "e1", date: "2026-09-01", time: "09:30", price: 32, status: "confirmada", petState: "secado", notes: "Moño rosado.", notified: false },
   { id: "a3", petId: "p3", customerId: "c2", serviceId: "s1", employeeId: "e2", date: "2026-09-01", time: "10:00", price: 20, status: "confirmada", petState: "grooming", notes: "", notified: false },
-  { id: "a4", petId: "p5", customerId: "c4", serviceId: "s3", employeeId: "e2", date: "2026-09-01", time: "10:30", price: 45, status: "pendiente", petState: "esperando", notes: "Confirmar por WhatsApp.", notified: false },
+  { id: "a4", petId: "p5", customerId: "c4", serviceId: "s3", employeeId: "", date: "2026-09-01", time: "10:30", price: 45, status: "pendiente", petState: "esperando", notes: "Confirmar por WhatsApp.", notified: false },
   { id: "a5", petId: "p7", customerId: "c5", serviceId: "s3", employeeId: "e3", date: "2026-09-01", time: "11:00", price: 45, status: "confirmada", petState: "lista", notes: "Cuidado con la cadera.", notified: true },
   { id: "a6", petId: "p2", customerId: "c1", serviceId: "s4", employeeId: "e3", date: "2026-09-01", time: "11:30", price: 8, status: "completada", petState: "recogida", notes: "", notified: true },
-  { id: "a7", petId: "p6", customerId: "c4", serviceId: "s1", employeeId: "e1", date: "2026-09-01", time: "13:00", price: 20, status: "pendiente", petState: "esperando", notes: "Primera visita.", notified: false },
+  { id: "a7", petId: "p6", customerId: "c4", serviceId: "s1", employeeId: "", date: "2026-09-01", time: "13:00", price: 20, status: "pendiente", petState: "esperando", notes: "Primera visita.", notified: false },
   { id: "a8", petId: "p1", customerId: "c1", serviceId: "s4", employeeId: "e1", date: "2026-09-01", time: "14:00", price: 8, status: "cancelada", petState: "esperando", notes: "Cliente reprogramará.", notified: false },
   { id: "a9", petId: "p3", customerId: "c2", serviceId: "s2", employeeId: "e2", date: "2026-09-02", time: "09:00", price: 32, status: "confirmada", petState: "esperando", notes: "", notified: false },
   { id: "a10", petId: "p4", customerId: "c3", serviceId: "s3", employeeId: "e3", date: "2026-09-03", time: "10:00", price: 45, status: "pendiente", petState: "esperando", notes: "", notified: false },
@@ -191,6 +191,11 @@ export const TODAY = "2026-09-01";
 export const findPet = (id: string) => pets.find((p) => p.id === id);
 export const findCustomer = (id: string) => customers.find((c) => c.id === id);
 export const findService = (id: string) => services.find((s) => s.id === id);
+export const prevPetState = (state: PetState): PetState | undefined => {
+  const i = PET_FLOW.indexOf(state);
+  return i > 0 ? PET_FLOW[i - 1] : undefined;
+};
+
 export const findEmployee = (id: string) => employees.find((e) => e.id === id);
 
 export const weeklyRevenue = [
