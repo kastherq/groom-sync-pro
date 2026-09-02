@@ -53,6 +53,9 @@ type Ctx = {
   setPetState: (appointmentId: string, state: PetState) => void;
   setApptState: (appointmentId: string, state: ApptState) => void;
   addAppointment: (a: Omit<Appointment, "id" | "notified">) => void;
+  claimAppointment: (appointmentId: string, employeeId: string) => void;
+  releaseAppointment: (appointmentId: string) => void;
+  addEmployee: (e: Omit<Employee, "id" | "assigned" | "servicesDone" | "initials">) => void;
   addCustomer: (c: Omit<Customer, "id" | "petIds" | "since" | "lastVisit">) => void;
   toggleEmployee: (id: string) => void;
   toggleService: (id: string) => void;
@@ -76,6 +79,32 @@ export function GroomProvider({
   const [employees, setEmployees] = useState<Employee[]>(seedEmployees);
   const [services, setServices] = useState<Service[]>(seedServices);
 
+  const claimAppointment = useCallback((id: string, employeeId: string) => {
+    setAppointments((prev) => prev.map((a) => (a.id === id && !a.employeeId ? { ...a, employeeId } : a)));
+  }, []);
+
+  const releaseAppointment = useCallback((id: string) => {
+    setAppointments((prev) => prev.map((a) => (a.id === id ? { ...a, employeeId: "" } : a)));
+  }, []);
+
+  const addEmployee = useCallback((e: Omit<Employee, "id" | "assigned" | "servicesDone" | "initials">) => {
+    setEmployees((prev) => [
+      ...prev,
+      {
+        ...e,
+        id: `e${prev.length + 1}${Date.now() % 1000}`,
+        assigned: 0,
+        servicesDone: 0,
+        initials: e.name
+          .split(" ")
+          .map((w) => w[0] ?? "")
+          .slice(0, 2)
+          .join("")
+          .toUpperCase(),
+      },
+    ]);
+  }, []);
+
   const setPetState = useCallback((id: string, state: PetState) => {
     setAppointments((prev) =>
       prev.map((a) =>
@@ -84,7 +113,8 @@ export function GroomProvider({
               ...a,
               petState: state,
               notified: state === "lista" ? true : a.notified,
-              status: state === "recogida" ? "completada" : a.status,
+              status:
+                state === "recogida" ? "completada" : a.status === "completada" ? "confirmada" : a.status,
             }
           : a,
       ),
@@ -129,10 +159,16 @@ export function GroomProvider({
       pets: seedPets,
       employees,
       services,
-      currentEmployeeId: "e1",
+      currentEmployeeId:
+        employees.find((e) => e.name === userName && e.role === "peluquero")?.id ??
+        employees.find((e) => e.role === "peluquero")?.id ??
+        "e1",
       setPetState,
       setApptState,
       addAppointment,
+      claimAppointment,
+      releaseAppointment,
+      addEmployee,
       addCustomer,
       toggleEmployee,
       toggleService,
@@ -149,6 +185,9 @@ export function GroomProvider({
       setPetState,
       setApptState,
       addAppointment,
+      claimAppointment,
+      releaseAppointment,
+      addEmployee,
       addCustomer,
       toggleEmployee,
       toggleService,

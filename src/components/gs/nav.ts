@@ -32,10 +32,11 @@ export const NAV_BY_ROLE: Record<Role, NavItem[]> = {
     { label: "Agenda", to: "/app/agenda", icon: CalendarRange },
     { label: "Mascotas", to: "/app/mascotas", icon: PawPrint },
     { label: "Clientes", to: "/app/clientes", icon: Users },
+    { label: "Empleados", to: "/app/empleados", icon: UsersRound },
   ],
   peluquero: [
-    { label: "Mis citas", to: "/app/mis-citas", icon: CalendarDays },
-    { label: "Mis mascotas", to: "/app/mis-mascotas", icon: PawPrint },
+    { label: "Citas de hoy", to: "/app/mis-citas", icon: CalendarDays },
+    { label: "Mascotas del día", to: "/app/mis-mascotas", icon: PawPrint },
   ],
 };
 
