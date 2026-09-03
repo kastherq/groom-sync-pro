@@ -25,6 +25,7 @@ import { Route as AppMascotasRouteImport } from './routes/app.mascotas'
 import { Route as AppMisCitasRouteImport } from './routes/app.mis-citas'
 import { Route as AppMisMascotasRouteImport } from './routes/app.mis-mascotas'
 import { Route as AppServiciosRouteImport } from './routes/app.servicios'
+import { Route as LoginIndexRouteImport } from './routes/login.index'
 import { Route as AppClientesIndexRouteImport } from './routes/app.clientes.index'
 import { Route as AppClientesCustomerIdRouteImport } from './routes/app.clientes.$customerId'
 import { Route as AppMascotasIndexRouteImport } from './routes/app.mascotas.index'
@@ -110,6 +111,11 @@ const AppServiciosRoute = AppServiciosRouteImport.update({
   path: '/servicios',
   getParentRoute: () => AppRoute,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
+} as any)
 const AppClientesIndexRoute = AppClientesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -134,7 +140,7 @@ const AppMascotasPetIdRoute = AppMascotasPetIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
@@ -155,7 +162,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -167,6 +173,7 @@ export interface FileRoutesByTo {
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
   '/app': typeof AppIndexRoute
+  '/login': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes': typeof AppClientesIndexRoute
@@ -176,7 +183,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -190,6 +197,7 @@ export interface FileRoutesById {
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
@@ -214,6 +222,7 @@ export interface FileRouteTypes {
     | '/app/mis-mascotas'
     | '/app/servicios'
     | '/app/'
+    | '/login/'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes/'
@@ -221,7 +230,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -233,6 +241,7 @@ export interface FileRouteTypes {
     | '/app/mis-mascotas'
     | '/app/servicios'
     | '/app'
+    | '/login'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes'
@@ -255,6 +264,7 @@ export interface FileRouteTypes {
     | '/app/mis-mascotas'
     | '/app/servicios'
     | '/app/'
+    | '/login/'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes/'
@@ -264,7 +274,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
   RecuperarPasswordRoute: typeof RecuperarPasswordRoute
 }
 
@@ -382,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppServiciosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/login/': {
+      id: '/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
     '/app/clientes/': {
       id: '/app/clientes/'
       path: '/'
@@ -473,10 +490,20 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface LoginRouteChildren {
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
   RecuperarPasswordRoute: RecuperarPasswordRoute,
 }
 export const routeTree = rootRouteImport
