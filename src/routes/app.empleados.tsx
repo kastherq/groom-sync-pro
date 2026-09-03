@@ -27,23 +27,42 @@ export const Route = createFileRoute("/app/empleados")({
 });
 
 function EmpleadosPage() {
-  const { employees, appointments, toggleEmployee, addEmployee, role } = useGroom();
+  const { employees, appointments, toggleEmployee, addEmployee, updateEmployee, role } = useGroom();
   const canManage = role === "dueno" || role === "admin";
   const [open, setOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [newRole, setNewRole] = useState<Role>("peluquero");
+
+  const openCreate = () => {
+    setEditingId(null);
+    setName("");
+    setPhone("");
+    setNewRole("peluquero");
+    setOpen(true);
+  };
+
+  const openEdit = (e: { id: string; name: string; phone: string; role: Role }) => {
+    setEditingId(e.id);
+    setName(e.name);
+    setPhone(e.phone === "—" ? "" : e.phone);
+    setNewRole(e.role === "dueno" ? "admin" : e.role);
+    setOpen(true);
+  };
 
   const submit = () => {
     if (!name.trim()) {
       toast.error("Escribe el nombre del empleado");
       return;
     }
-    addEmployee({ name: name.trim(), phone: phone.trim() || "—", role: newRole, active: true });
-    toast.success(`${name.trim()} agregado al equipo`);
-    setName("");
-    setPhone("");
-    setNewRole("peluquero");
+    if (editingId) {
+      updateEmployee(editingId, { name: name.trim(), phone: phone.trim() || "—", role: newRole });
+      toast.success(`${name.trim()} actualizado`);
+    } else {
+      addEmployee({ name: name.trim(), phone: phone.trim() || "—", role: newRole, active: true });
+      toast.success(`${name.trim()} agregado al equipo`);
+    }
     setOpen(false);
   };
 
@@ -54,7 +73,7 @@ function EmpleadosPage() {
         subtitle={`${employees.filter((e) => e.active).length} activos de ${employees.length}`}
         actions={
           canManage ? (
-            <Button className="h-10" onClick={() => setOpen(true)}>
+            <Button className="h-10" onClick={openCreate}>
               <UserPlus className="mr-1.5 h-4 w-4" /> Nuevo empleado
             </Button>
           ) : undefined
@@ -94,7 +113,7 @@ function EmpleadosPage() {
                 />
                 {e.active ? "Activo" : "Inactivo"}
               </label>
-              <Button variant="outline" size="sm" onClick={() => toast.info(`Editar ${e.name}`)}>
+              <Button variant="outline" size="sm" onClick={() => openEdit(e)} disabled={!canManage}>
                 Editar
               </Button>
             </div>
@@ -105,7 +124,7 @@ function EmpleadosPage() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Nuevo empleado</DialogTitle>
+            <DialogTitle>{editingId ? "Editar empleado" : "Nuevo empleado"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
@@ -133,7 +152,7 @@ function EmpleadosPage() {
             <Button variant="ghost" onClick={() => setOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={submit}>Crear empleado</Button>
+            <Button onClick={submit}>{editingId ? "Guardar cambios" : "Crear empleado"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

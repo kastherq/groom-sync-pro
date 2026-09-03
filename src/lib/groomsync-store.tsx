@@ -60,6 +60,9 @@ type Ctx = {
   toggleEmployee: (id: string) => void;
   toggleService: (id: string) => void;
   addService: (s: Omit<Service, "id">) => void;
+  updateService: (id: string, s: Partial<Omit<Service, "id">>) => void;
+  deleteService: (id: string) => void;
+  updateEmployee: (id: string, e: Partial<Omit<Employee, "id" | "initials">>) => void;
 };
 
 const GroomContext = createContext<Ctx | null>(null);
@@ -148,6 +151,18 @@ export function GroomProvider({
     setServices((prev) => [...prev, { ...s, id: `s${prev.length + 1}${Date.now() % 1000}` }]);
   }, []);
 
+  const updateService = useCallback((id: string, s: Partial<Omit<Service, "id">>) => {
+    setServices((prev) => prev.map((svc) => (svc.id === id ? { ...svc, ...s } : svc)));
+  }, []);
+
+  const deleteService = useCallback((id: string) => {
+    setServices((prev) => prev.filter((svc) => svc.id !== id));
+  }, []);
+
+  const updateEmployee = useCallback((id: string, e: Partial<Omit<Employee, "id" | "initials">>) => {
+    setEmployees((prev) => prev.map((emp) => (emp.id === id ? { ...emp, ...e } : emp)));
+  }, []);
+
   const value = useMemo<Ctx>(
     () => ({
       role,
@@ -173,6 +188,9 @@ export function GroomProvider({
       toggleEmployee,
       toggleService,
       addService,
+      updateService,
+      deleteService,
+      updateEmployee,
     }),
     [
       role,
@@ -192,6 +210,9 @@ export function GroomProvider({
       toggleEmployee,
       toggleService,
       addService,
+      updateService,
+      deleteService,
+      updateEmployee,
     ],
   );
 
