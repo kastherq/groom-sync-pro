@@ -188,6 +188,9 @@ export function GroomProvider({
       toggleEmployee,
       toggleService,
       addService,
+      updateService,
+      deleteService,
+      updateEmployee,
     }),
     [
       role,
@@ -207,6 +210,9 @@ export function GroomProvider({
       toggleEmployee,
       toggleService,
       addService,
+      updateService,
+      deleteService,
+      updateEmployee,
     ],
   );
 
