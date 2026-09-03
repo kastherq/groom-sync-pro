@@ -26,6 +26,7 @@ import { Route as AppMisCitasRouteImport } from './routes/app.mis-citas'
 import { Route as AppMisMascotasRouteImport } from './routes/app.mis-mascotas'
 import { Route as AppServiciosRouteImport } from './routes/app.servicios'
 import { Route as LoginIndexRouteImport } from './routes/login.index'
+import { Route as LoginSalonRouteImport } from './routes/login.$salon'
 import { Route as AppClientesIndexRouteImport } from './routes/app.clientes.index'
 import { Route as AppClientesCustomerIdRouteImport } from './routes/app.clientes.$customerId'
 import { Route as AppMascotasIndexRouteImport } from './routes/app.mascotas.index'
@@ -116,6 +117,11 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LoginRoute,
 } as any)
+const LoginSalonRoute = LoginSalonRouteImport.update({
+  id: '/$salon',
+  path: '/$salon',
+  getParentRoute: () => LoginRoute,
+} as any)
 const AppClientesIndexRoute = AppClientesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app': typeof AppIndexRoute
   '/login': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app/'
     | '/login/'
     | '/app/clientes/$customerId'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app'
     | '/login'
     | '/app/clientes/$customerId'
@@ -263,6 +274,7 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app/'
     | '/login/'
     | '/app/clientes/$customerId'
@@ -399,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof LoginRoute
     }
+    '/login/$salon': {
+      id: '/login/$salon'
+      path: '/$salon'
+      fullPath: '/login/$salon'
+      preLoaderRoute: typeof LoginSalonRouteImport
+      parentRoute: typeof LoginRoute
+    }
     '/app/clientes/': {
       id: '/app/clientes/'
       path: '/'
@@ -491,10 +510,12 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface LoginRouteChildren {
+  LoginSalonRoute: typeof LoginSalonRoute
   LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const LoginRouteChildren: LoginRouteChildren = {
+  LoginSalonRoute: LoginSalonRoute,
   LoginIndexRoute: LoginIndexRoute,
 }
 
