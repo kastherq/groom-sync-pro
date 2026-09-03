@@ -113,7 +113,7 @@ function EmpleadosPage() {
                 />
                 {e.active ? "Activo" : "Inactivo"}
               </label>
-              <Button variant="outline" size="sm" onClick={() => toast.info(`Editar ${e.name}`)}>
+              <Button variant="outline" size="sm" onClick={() => openEdit(e)} disabled={!canManage}>
                 Editar
               </Button>
             </div>
@@ -124,7 +124,7 @@ function EmpleadosPage() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Nuevo empleado</DialogTitle>
+            <DialogTitle>{editingId ? "Editar empleado" : "Nuevo empleado"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
@@ -152,7 +152,7 @@ function EmpleadosPage() {
             <Button variant="ghost" onClick={() => setOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={submit}>Crear empleado</Button>
+            <Button onClick={submit}>{editingId ? "Guardar cambios" : "Crear empleado"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
