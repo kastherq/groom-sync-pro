@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as NuevaPasswordRouteImport } from './routes/nueva-password'
 import { Route as RecuperarPasswordRouteImport } from './routes/recuperar-password'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
@@ -45,6 +46,11 @@ const AppRoute = AppRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NuevaPasswordRoute = NuevaPasswordRouteImport.update({
+  id: '/nueva-password',
+  path: '/nueva-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecuperarPasswordRoute = RecuperarPasswordRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/login': typeof LoginRouteWithChildren
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -287,6 +299,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   LoginRoute: typeof LoginRouteWithChildren
+  NuevaPasswordRoute: typeof NuevaPasswordRoute
   RecuperarPasswordRoute: typeof RecuperarPasswordRoute
 }
 
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nueva-password': {
+      id: '/nueva-password'
+      path: '/nueva-password'
+      fullPath: '/nueva-password'
+      preLoaderRoute: typeof NuevaPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recuperar-password': {
@@ -525,6 +545,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   LoginRoute: LoginRouteWithChildren,
+  NuevaPasswordRoute: NuevaPasswordRoute,
   RecuperarPasswordRoute: RecuperarPasswordRoute,
 }
 export const routeTree = rootRouteImport

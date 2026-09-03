@@ -48,6 +48,11 @@ export function LoginView({ salon = "petfashion" }: { salon?: string }) {
         </Link>
 
         <div className="mx-auto w-full max-w-md">
+          <img
+            src={dogAsset.url}
+            alt="Perro recién bañado en una peluquería canina"
+            className="mb-6 h-40 w-full rounded-xl object-cover sm:h-52 lg:hidden"
+          />
           <img src={logoAsset.url} alt="GroomSync" className="h-16 w-16 object-contain" />
           <h1 className="type-h1 mt-4">GroomSync</h1>
           <p className="mt-1 text-sm font-semibold text-primary">{salon}</p>
