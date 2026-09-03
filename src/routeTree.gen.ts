@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as NuevaPasswordRouteImport } from './routes/nueva-password'
 import { Route as RecuperarPasswordRouteImport } from './routes/recuperar-password'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAgendaRouteImport } from './routes/app.agenda'
@@ -25,6 +26,8 @@ import { Route as AppMascotasRouteImport } from './routes/app.mascotas'
 import { Route as AppMisCitasRouteImport } from './routes/app.mis-citas'
 import { Route as AppMisMascotasRouteImport } from './routes/app.mis-mascotas'
 import { Route as AppServiciosRouteImport } from './routes/app.servicios'
+import { Route as LoginIndexRouteImport } from './routes/login.index'
+import { Route as LoginSalonRouteImport } from './routes/login.$salon'
 import { Route as AppClientesIndexRouteImport } from './routes/app.clientes.index'
 import { Route as AppClientesCustomerIdRouteImport } from './routes/app.clientes.$customerId'
 import { Route as AppMascotasIndexRouteImport } from './routes/app.mascotas.index'
@@ -43,6 +46,11 @@ const AppRoute = AppRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NuevaPasswordRoute = NuevaPasswordRouteImport.update({
+  id: '/nueva-password',
+  path: '/nueva-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecuperarPasswordRoute = RecuperarPasswordRouteImport.update({
@@ -110,6 +118,16 @@ const AppServiciosRoute = AppServiciosRouteImport.update({
   path: '/servicios',
   getParentRoute: () => AppRoute,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginSalonRoute = LoginSalonRouteImport.update({
+  id: '/$salon',
+  path: '/$salon',
+  getParentRoute: () => LoginRoute,
+} as any)
 const AppClientesIndexRoute = AppClientesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -134,7 +152,8 @@ const AppMascotasPetIdRoute = AppMascotasPetIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -147,7 +166,9 @@ export interface FileRoutesByFullPath {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
@@ -155,7 +176,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -166,7 +187,9 @@ export interface FileRoutesByTo {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app': typeof AppIndexRoute
+  '/login': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes': typeof AppClientesIndexRoute
@@ -176,7 +199,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
+  '/nueva-password': typeof NuevaPasswordRoute
   '/recuperar-password': typeof RecuperarPasswordRoute
   '/app/agenda': typeof AppAgendaRoute
   '/app/citas': typeof AppCitasRoute
@@ -189,7 +213,9 @@ export interface FileRoutesById {
   '/app/mis-citas': typeof AppMisCitasRoute
   '/app/mis-mascotas': typeof AppMisMascotasRoute
   '/app/servicios': typeof AppServiciosRoute
+  '/login/$salon': typeof LoginSalonRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/clientes/$customerId': typeof AppClientesCustomerIdRoute
   '/app/mascotas/$petId': typeof AppMascotasPetIdRoute
   '/app/clientes/': typeof AppClientesIndexRoute
@@ -201,6 +227,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -213,7 +240,9 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app/'
+    | '/login/'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes/'
@@ -221,7 +250,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -232,7 +261,9 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app'
+    | '/login'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes'
@@ -242,6 +273,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/nueva-password'
     | '/recuperar-password'
     | '/app/agenda'
     | '/app/citas'
@@ -254,7 +286,9 @@ export interface FileRouteTypes {
     | '/app/mis-citas'
     | '/app/mis-mascotas'
     | '/app/servicios'
+    | '/login/$salon'
     | '/app/'
+    | '/login/'
     | '/app/clientes/$customerId'
     | '/app/mascotas/$petId'
     | '/app/clientes/'
@@ -264,7 +298,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
+  NuevaPasswordRoute: typeof NuevaPasswordRoute
   RecuperarPasswordRoute: typeof RecuperarPasswordRoute
 }
 
@@ -289,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nueva-password': {
+      id: '/nueva-password'
+      path: '/nueva-password'
+      fullPath: '/nueva-password'
+      preLoaderRoute: typeof NuevaPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recuperar-password': {
@@ -382,6 +424,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppServiciosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/login/': {
+      id: '/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/login/$salon': {
+      id: '/login/$salon'
+      path: '/$salon'
+      fullPath: '/login/$salon'
+      preLoaderRoute: typeof LoginSalonRouteImport
+      parentRoute: typeof LoginRoute
+    }
     '/app/clientes/': {
       id: '/app/clientes/'
       path: '/'
@@ -473,10 +529,23 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface LoginRouteChildren {
+  LoginSalonRoute: typeof LoginSalonRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginSalonRoute: LoginSalonRoute,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
+  NuevaPasswordRoute: NuevaPasswordRoute,
   RecuperarPasswordRoute: RecuperarPasswordRoute,
 }
 export const routeTree = rootRouteImport
